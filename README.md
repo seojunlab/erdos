@@ -6,7 +6,7 @@ The problems come from [erdosproblems.com](https://www.erdosproblems.com), which
 
 ## How this research is done
 
-We do this research together with AI. AI can make mistakes that look convincing, so every result here follows these rules:
+This research is done with the help of AI. AI can make mistakes that look convincing, so every result here follows these rules:
 
 | Label | Meaning |
 |---|---|
@@ -18,6 +18,8 @@ We do this research together with AI. AI can make mistakes that look convincing,
 - Every citation points to a source that was opened and read, never recalled from memory.
 - Every result file records the parameters, code version, and date that produced it.
 - Failed attempts stay in the repository with a note on why they stopped.
+
+The full rules are in [CONTRIBUTING.md](CONTRIBUTING.md).
 
 If you spot an error, please [open an issue](https://github.com/seojunlab/erdos/issues).
 
