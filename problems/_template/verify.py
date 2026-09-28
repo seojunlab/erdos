@@ -2,6 +2,7 @@
 
 Must use a different algorithm or library than explore.py. A claim is
 labelled verified only when both programs agree over the stated range.
+Write results with erdos.results.write_result(..., script="verify.py").
 """
 
 

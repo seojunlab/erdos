@@ -13,21 +13,25 @@ from pathlib import Path
 from erdos import __version__
 from erdos._io import atomic_write_text
 
-RESERVED = ("created", "commit", "dirty", "python", "erdos_version")
+RESERVED = ("created", "script", "commit", "dirty", "python", "erdos_version")
 
 
 def git_info(cwd: Path) -> tuple[str, str]:
     """Return (commit, dirty) for the repository containing cwd, or ("unknown", "unknown")."""
     try:
-        commit = subprocess.run(
-            ["git", "rev-parse", "HEAD"], cwd=cwd, capture_output=True, text=True, check=True
-        ).stdout.strip()
-        status = subprocess.run(
-            ["git", "status", "--porcelain"], cwd=cwd, capture_output=True, text=True, check=True
-        ).stdout
-    except (OSError, subprocess.CalledProcessError):
+        commit = _git(["rev-parse", "HEAD"], cwd).strip()
+        # Untracked files are ignored: a fresh results/ file must not mark the next run dirty.
+        status = _git(["status", "--porcelain", "--untracked-files=no"], cwd)
+    except (OSError, ValueError, subprocess.CalledProcessError):
         return "unknown", "unknown"
     return commit, "true" if status.strip() else "false"
+
+
+def _git(args: list[str], cwd: Path) -> str:
+    return subprocess.run(
+        ["git", *args], cwd=cwd, capture_output=True, check=True,
+        encoding="utf-8", errors="replace",
+    ).stdout
 
 
 def write_result(
@@ -35,7 +39,16 @@ def write_result(
     columns: Sequence[str],
     rows: Iterable[Sequence[object]],
     params: Mapping[str, object],
+    *,
+    script: str,
 ) -> None:
+    """Write a CSV result file headed by its provenance.
+
+    `script` is the file name of the program that produced the data, such as
+    "explore.py" or "verify.py"; meta.yaml checks it for verified claims.
+    """
+    if not script or script != Path(script).name or any(ch in script for ch in ":\r\n"):
+        raise ValueError(f"script must be a plain file name like 'explore.py', got {script!r}")
     for key, value in params.items():
         if key in RESERVED:
             raise ValueError(f"parameter '{key}' is reserved")
@@ -55,6 +68,7 @@ def write_result(
     commit, dirty = git_info(path.parent)
     header = {
         "created": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "script": script,
         "commit": commit,
         "dirty": dirty,
         "python": platform.python_version(),
@@ -66,14 +80,14 @@ def write_result(
 
 
 def read_result(path: Path) -> tuple[dict[str, str], list[str], list[list[str]]]:
-    lines = path.read_text(encoding="utf-8").splitlines()
+    with open(path, encoding="utf-8", newline="") as fh:
+        text = fh.read()
     params: dict[str, str] = {}
-    body = 0
-    while body < len(lines) and lines[body].startswith("# "):
-        key, _, value = lines[body][2:].partition(": ")
+    while text.startswith("# "):
+        line, _, text = text.partition("\n")
+        key, _, value = line[2:].partition(": ")
         params[key] = value
-        body += 1
-    table = list(csv.reader(lines[body:]))
+    table = list(csv.reader(io.StringIO(text, newline="")))
     if not table:
         raise ValueError(f"{path}: no column header")
     return params, table[0], table[1:]
