@@ -6,7 +6,7 @@ The problems come from [erdosproblems.com](https://www.erdosproblems.com), which
 
 ## How this research is done
 
-This research is done with the help of AI. AI can make mistakes that look convincing, so every result here follows these rules:
+We do this research together with AI. AI can make mistakes that look convincing, so every result here follows these rules:
 
 | Label | Meaning |
 |---|---|
