@@ -355,6 +355,9 @@ def refined_model(eps) -> float:
     return 1 - survive_half * math.exp(-(eps - 0.5) / 2)
 
 
+WATERMARK = "github.com/seojunlab"
+
+
 def make_figure(root: Path = FOLDER) -> Path:
     import matplotlib
 
@@ -395,6 +398,7 @@ def make_figure(root: Path = FOLDER) -> Path:
     ax.grid(alpha=0.3, which="both")
     ax.legend()
     fig.tight_layout()
+    fig.text(0.99, 0.01, WATERMARK, ha="right", va="bottom", fontsize=8, color="#888888", alpha=0.8)
     out = root / "figures" / "ratio_vs_x.png"
     fig.savefig(out, dpi=130)
     plt.close(fig)
