@@ -1,0 +1,59 @@
+number: 1072
+title: Primes p where p-1 is the least m with p | m!+1
+url: https://www.erdosproblems.com/1072
+site_status: open
+our_status: paused
+claims:
+- label: known
+  statement: >-
+    Open problem attributed to Erdős, Hardy and Subbarao, who believed that the number of
+    primes p <= x with f(p) = p - 1 is o(x / log x).
+  source: https://www.erdosproblems.com/1072
+- label: known
+  statement: >-
+    OEIS A073944 gives f(p) for the first 10,000 primes; A154554 lists primes with
+    f(p) = p - 1 (b-file of 1,000 terms up to 25,349).
+  source: https://oeis.org/A154554
+- label: verified
+  statement: >-
+    Two independent programs (half scan with the reflection identity; plain forward scan)
+    give identical f(p) for every prime p <= 2,000,000 (per-block counts and SHA-256
+    fingerprints agree). #{p <= x : f(p) = p - 1} is 65 of 168 (x = 10^3), 467 of 1,229
+    (10^4), 3,433 of 9,592 (10^5), 27,771 of 78,498 (10^6, share 0.3538) and 52,674 of
+    148,933 (2*10^6, share 0.3537).
+  range: all primes p <= 2000000
+  evidence:
+  - results/explore_blocks.csv
+  - results/verify_blocks.csv
+- label: observed
+  statement: >-
+    76,995 of the 216,816 primes p <= 3,000,000 have f(p) = p - 1 (share 0.3551); the share
+    stays between 0.353 and 0.356 from 10^5 to 3*10^6 with no visible downward drift.
+  range: all primes p <= 3000000 (explore.py only)
+  evidence:
+  - results/explore_counts.csv
+  - results/explore_blocks.csv
+- label: observed
+  statement: >-
+    The share of primes with f(p)/p < eps does not shrink with p: for primes in
+    (10^6, 3*10^6] it is 0.0105 (eps 0.01), 0.0952 (0.1), 0.3276 (0.4), 0.5427 (0.5),
+    0.6259 (0.9), close to 1 - exp(-eps) for eps < 0.5, with a jump of about 0.215 at 1/2.
+  range: all primes p <= 3000000 (explore.py only)
+  evidence:
+  - results/explore_distribution.csv
+- label: observed
+  statement: >-
+    f(p) = (p - 1)/2 for 30.2% of primes p = 3 mod 4 and never for p = 1 mod 4;
+    f(p) = p - 1 for 47.1% of primes p = 1 mod 4 and 23.7% of primes p = 3 mod 4.
+  range: primes 5 <= p <= 1000000 (explore.py only)
+  evidence:
+  - results/explore_mod4.csv
+- label: conjectured
+  statement: >-
+    Refined heuristic (ours): accounting for (h!)^2 = (-1)^(h+1) at h = (p-1)/2 and for the
+    fact that upper-half hits with odd k = p-1-m would already be lower-half hits, the share
+    of primes with f(p) = p - 1 should tend to (3/4) e^(-3/4) = 0.3543 rather than 1/e = 0.3679,
+    and the share with f(p)/p < eps to 1 - exp(-eps) for eps < 1/2 and
+    1 - (3/4) e^(-1/2) e^(-(eps - 1/2)/2) for 1/2 <= eps < 1. This would mean infinitely many
+    p with f(p) = p - 1 and f(p)/p not tending to 0 for almost all p; the data to 3*10^6
+    agree closely but cannot prove it.

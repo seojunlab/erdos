@@ -1,0 +1,18 @@
+# created: 2026-09-28T13:51:58+00:00
+# script: explore.py
+# commit: 77dfd3bc81db99228e746010d9fd19d965eaf946
+# dirty: false
+# python: 3.12.14
+# erdos_version: 0.1.0
+# method: half scan j=1..(p-1)/2 with reflection k!(p-1-k)! = (-1)^(k+1); float-reciprocal modmul; 8 lanes
+# range: primes 5 <= p <= 1000000
+# columns: h = (p-1)/2; refined_model = prediction of the refined heuristic (README)
+p_class,primes,where_f,count,fraction,refined_model
+1 mod 4,39175,f < h,15440,0.394129,0.393469
+1 mod 4,39175,f = h,0,0.000000,0.000000
+1 mod 4,39175,h < f < p-1,5297,0.135214,0.134164
+1 mod 4,39175,f = p-1,18438,0.470657,0.472367
+3 mod 4,39321,f < h,15470,0.393428,0.393469
+3 mod 4,39321,f = h,11876,0.302027,0.303265
+3 mod 4,39321,h < f < p-1,2644,0.067241,0.067082
+3 mod 4,39321,f = p-1,9331,0.237303,0.236183

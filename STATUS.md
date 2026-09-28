@@ -2,4 +2,6 @@
 
 # Status
 
-No problems attempted yet.
+| # | Problem | Site status | Our status | Verified | Observed | Conjectured |
+|---:|---|---|---|---:|---:|---:|
+| 1072 | [Primes p where p-1 is the least m with p \| m!+1](problems/1072-factorial-wilson-primes/) | open | paused | 1 | 3 | 1 |

@@ -1,0 +1,16 @@
+# created: 2026-09-28T13:51:11+00:00
+# script: verify.py
+# commit: 77dfd3bc81db99228e746010d9fd19d965eaf946
+# dirty: false
+# python: 3.12.14
+# erdos_version: 0.1.0
+# method: forward scan m=1..p-2 with exact integer remainder, stop at first m! = -1; 8 lanes
+# block: 100000
+# requested_limit: 2000000
+# completed_upto: 2000000
+# threads: 1
+# compute_seconds_total: 262.9
+# range: x = powers of 10 that are block ends, up to 2000000
+x,pi_x,full_count,ratio
+100000,9592,3433,0.357902
+1000000,78498,27771,0.353780

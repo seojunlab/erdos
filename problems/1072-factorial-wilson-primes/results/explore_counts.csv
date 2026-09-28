@@ -1,0 +1,20 @@
+# created: 2026-09-28T13:51:24+00:00
+# script: explore.py
+# commit: 77dfd3bc81db99228e746010d9fd19d965eaf946
+# dirty: false
+# python: 3.12.14
+# erdos_version: 0.1.0
+# method: half scan j=1..(p-1)/2 with reflection k!(p-1-k)! = (-1)^(k+1); float-reciprocal modmul; 8 lanes
+# block: 100000
+# requested_limit: 3000000
+# completed_upto: 3000000
+# threads: 1
+# compute_seconds_total: 278.7
+# range: x = powers of 10 up to 3000000
+# columns: full_count = #{p <= x : f(p) = p - 1}; ratio = full_count / pi_x
+x,pi_x,full_count,ratio,one_over_e,refined_model
+1000,168,65,0.386905,0.367879,0.354275
+10000,1229,467,0.379984,0.367879,0.354275
+100000,9592,3433,0.357902,0.367879,0.354275
+1000000,78498,27771,0.353780,0.367879,0.354275
+3000000,216816,76995,0.355117,0.367879,0.354275
